@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Fruit</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <style>
+        #warning {
+            color: #0610FB;
+            font: Montserrat;
+            bold: 700;
+            font-size: 17vh;
+        }
+        #page_title {
+            font-size: 10vh;
+            color: #0610FB;
+        }
+    </style>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% csrf_token %}
+    <section class="text-center container-fluid">
+        <section class="row">
+            <section class="col-md-12">
+                <h3 id="page_title">Pick A Fruit</h3>
+                <!--<p id="session">Hi {{ user.get_username }}!</p>-->
+            </section>
+        </section>
+    </section>
+    <br/>
+    <section class="text-center container-fluid">
+        <section class="row">
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/green_apple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/red_apple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/pineapple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/orange.webp" width="300" height="300"></a></section>
+        </section>
+        <section class="row">
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/pumpkin.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/watermelon.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/fruit-1234657_960_720.webp" width="300" height="300"></a></section>
+            <section class="col-md-3"><a href="{% url 'pickchallenge'%}"><img src="/static/fruit/mango.png" width="300" height="300"></a></section>
+        </section>
+    </section>
+{% else %}
+    <p id="warning">You must be logged in to continue playing the game. Sign in <a href="../login">here.</a></p>
+{% endif %}
+<section>
+</section>
+</body>
+</html>

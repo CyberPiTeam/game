@@ -1,0 +1,55 @@
+<!--Login page for user-->
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <style>
+        .bg {
+            padding-top: 20vh;
+        }
+        #form-title {
+            color: #0610FB;
+            font: Roboto;
+            bold: 700;
+            font-size: 35px;
+        }
+        .form-container {
+            top: 15vh;
+            background: #FFFDFD;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000;
+        }
+        #note {
+            font-size: 14px;
+            padding-top: 7px;
+        }
+    </style>
+</head>
+<body>
+    <section class="container-fluid bg">
+        <section class="row justify-content-center">
+            <section class="col-md-6">
+                <form class="form-container" method="POST">{%csrf_token%}
+                    <div class="form-group text-center">
+                        <h3 id="form-title">Welcome Back</h3>
+                    </div>
+                    <!-- Use crispy forms in django to make form pretty -->
+                    {{form | crispy}}
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <div class="text-center">
+                        <p id="note">Not registered? <a href="{% url 'game-signup' %}">Sign Up</a></p>
+                    <div>
+                </form>
+            </section>
+        </section>
+    </section>
+</body>
+<script src="/static/jquery-3.5.1.min.js"></script>
+<script src="/static/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</html>

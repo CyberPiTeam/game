@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Game</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <style>
+        .bg {
+            padding-top: 10%;
+        }
+        .page_title {
+            color: #0610FB;
+            font: Montserrat;
+            bold: 700;
+            font-size: 17vh;
+        }
+        #play_btn {
+            background-color: #0610FB;
+            font-size: 10vh;
+            width:50%;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        #session {
+            float:right;
+            color:#0610FB;
+        }
+    </style>
+</head>
+<body>
+    <section class="text-center container-fluid">
+        <section class="row">
+            <section class="col-md-12">
+                {% csrf_token %}
+                <!--Allow user to start playing game only if the user is logged in -->
+                {% if user.is_authenticated %}
+                    <!--<p id="session">Hi {{ user.get_username }}!</p>-->
+                    <h1 class="page_title bg">CyberPi Dress Up Game</h1>
+                    <br/>
+                    <a href="{% url 'pickfruit'%}"><button type="submit" class="btn btn-primary btn-block" id="play_btn">Play the Game</button></a>
+                {% else %}
+                    <p class="page_title">You must be logged in to continue playing the game. Sign in <a href="../login">here.</a></p>
+                {% endif %}
+            </section>
+        </section>
+    </section>
+</body>
+<script src="/static/jquery-3.5.1.min.js"></script>
+<script src="/static/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</html>
