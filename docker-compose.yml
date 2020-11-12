@@ -1,0 +1,8 @@
+version: "3.0"
+services:
+        gamification:
+                build: .
+                hostname: 'gamification'
+                ports:
+                - "80:8000"
+                restart: 'always'
