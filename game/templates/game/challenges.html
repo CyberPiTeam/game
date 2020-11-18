@@ -14,6 +14,13 @@
             background-color: #00008b;
             font-size: 7vh;
         }
+	.prize{
+	    cursor:pointer;
+	}
+	.solved{
+	    background-color:#007bff;
+	    border-color:#007bff;
+	}
         #page_title {
             font-size: 10vh;
             color: #0610FB;
@@ -30,6 +37,33 @@
         .no-click {
             pointer-events: none;
         }
+        #fruit {
+            position: absolute;
+            top: 25px;
+            left: 170px;
+	    width:120px;
+        }
+        #hat {
+            position: absolute;
+            top: 0px;
+            left: 190px;
+	    width:80px;
+        }
+        #shoe {
+            position: absolute;
+            top: 95px;
+            left: 190px;
+	    width:60px;
+        }
+        #face {
+            position: absolute;
+            top: 55px;
+            left: 200px;
+	    width:60px;
+        }
+        body {
+            min-height: 600px;
+        }
     </style>
 </head>
 <body>
@@ -38,29 +72,22 @@
     <section class="text-center container-fluid">
         <section class="row">
             <section class="col-md-12">
+				<img id="fruit" src="{{fruit}}">
+				<img id="hat" src="{{hat}}">
+				<img id="shoe" src="{{shoes}}">
+				<img id="face" src="{{face}}">
+            </section>
+        </section>
+        <section class="row">
+            <section class="col-md-12">
                 <h3 id="page_title">Jeopardy Game</h3>
-                <p id="session">Welcome, {{ user.get_username }}!</p>
+		<p id="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
             </section>
         </section>
     </section>
     <br/>
-    <section class="text-center container-fluid" id="container">
-        <!--<div class="modal" id="myModal">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="title"></h4>
-                        <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body" id="body">
-                        
-                    </div>
-                        <div class="modal-footer">
-                        <button class="btn btn-primary" data-dismiss="modal" id="done">Check Answer</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+    <section class="text-center container-fluid">
+	<section id="container"></section>
         <section class="row">
             <section class="col-md-3">
                 <button class="btn btn-primary btn-block category no-click">Shell</button>
@@ -73,83 +100,23 @@
             </section>
             <section class="col-md-3">
                 <button class="btn btn-primary btn-block category no-click">Web</button>
-            </section> 
-        </section>
-        <br/>
-        <section class="row">
-            <section class="col-md-3">
-                <button id="0" data-id='0' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">100</button>
-            </section>
-            <section class="col-md-3">
-                <button id="1" data-id='1' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">100</button>
-            </section>
-            <section class="col-md-3">
-                <button id="2" data-id='2' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">100</button>
-            </section>
-            <section class="col-md-3">
-                <button id="3" data-id='3' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">100</button>
             </section>
         </section>
         <br/>
-        <section class="row">
+	{% for chal in challenges %}
+		{% if forloop.counter0|divisibleby:4 %}
+			{% if forloop.counter0 != 0 %}
+        			</section>
+				<br>
+			{% endif %}
+			{% if forloop.counter0 != challenges|length %}
+        			<section class="row">
+			{% endif %}
+		{% endif %}
             <section class="col-md-3">
-                <button id="4" data-id='4' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">200</button>
+		    <button class="btn btn-primary btn-block level chalbtn {% if chal.solved == True %}solved{% endif %}" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
             </section>
-            <section class="col-md-3">
-                <button id="5" data-id='5' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">200</button>
-            </section>
-            <section class="col-md-3">
-                <button id="6" data-id='6' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">200</button>
-            </section>
-            <section class="col-md-3">
-                <button id="7" data-id='7' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">200</button>
-            </section>
-        </section>
-        <br/>
-        <section class="row">
-            <section class="col-md-3">
-                <button id="8" data-id='8' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">300</button>
-            </section>
-            <section class="col-md-3">
-                <button id="9" data-id='9' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">300</button>
-            </section>
-            <section class="col-md-3">
-                <button id="10" data-id='10' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">300</button>
-            </section>
-            <section class="col-md-3">
-                <button id="11" data-id='11' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">300</button>
-            </section>
-        </section>
-        <br/>
-        <section class="row">
-            <section class="col-md-3">
-                <button id="12" data-id='12' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">400</button>
-            </section>
-            <section class="col-md-3">
-                <button id="13" data-id='13' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">400</button>
-            </section>
-            <section class="col-md-3">
-                <button id="14" data-id='14' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">400</button>
-            </section>
-            <section class="col-md-3">
-                <button id="15" data-id='15' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">400</button>
-            </section>
-        </section>
-        <br/>
-        <section class="row">
-            <section class="col-md-3">
-                <button id="16" data-id='16' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">500</button>
-            </section>
-            <section class="col-md-3">
-                <button id="17" data-id='17' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">500</button>
-            </section>
-            <section class="col-md-3">
-                <button id="18" data-id='18' class="btn btn-primary btn-block level" data-toggle="modal" data-target="#myModal">500</button>
-            </section>
-            <section class="col-md-3">
-                <button id="19" data-id='19' class="btn btn-primary btn-block level" type="button">500</button>
-            </section>
-        </section>
+	{% endfor %}
     </section>
     {% else %}
         <p id="warning">You must be logged in to continue playing the game. Sign in <a href="../login">here.</a></p>
@@ -159,842 +126,86 @@
 <script type="text/javascript" src="/static/popper.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <script>
+	function addPrize(e){
+		console.log(e,this);
+		const target = e.target;
+		const id = target.id;
+		const src = target.getAttribute('src');
+		const challengeId = target.getAttribute('challengeId');
+		fetch('/chooseprize/',{
+			method: 'POST',
+			headers:{
+				'Content-Type': 'application/json'
+			},
+			body:JSON.stringify({
+				challengeId,
+				id,
+				src
+			})
+
+		}).then(res=>res.json()).then(res=>{
+			console.log(res);
+			window.location.reload();
+		}).catch(e=>{
+			console.error(e)
+		});
+	}
 (function($) {
-    //var infoModal = $('#myModal');
     var cont = $('#container');
-  $('#0').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#0').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done0">Check Answer</button></div></div></div></div>')
+  $('.chalbtn').on('click', function() {
+	  	chalbtn = this;
+                htmlData = this.getAttribute('name');
+                descrip = this.getAttribute('desc');
+	  	id = this.id
+	  	solved = this.getAttribute('solved') === 'True';
+	  	//my fix for this isn't clean by any means and would love to think about rewriting in the spring if there is time
+	  	if(solved)
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done1">Solved</button></div></div></div></div>'
+	  	else
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary"  id="done0">Check Answer</button></div></div></div></div>'
+
                 $("#myModal0").modal('show');
                 $('#close0').on('click', function() {
                     $("#myModal0").modal('hide');
                 })
-                $('#done0').on('click', function() {
-                    if (answer != $('#input0').val()) {
-                        $('#input0').css("border", "1px solid red");
-                        $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
-                        return;
-                    } 
-                    $('#title0').html("You Won!");
-                    $('#body0').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/anime.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/blue_eyes.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/cute.webp" width="100" height="100"  ></li></ul>')
-                    $('#done0').remove();
-                    $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="finish0">Finish</button>')
-                    $('#finish0').on('click', function() {
-                        $('#0').css("background-color", "#00008b");
-                        $('#0').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#0').addClass("no-click");
-                        $("#myModal0").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#1').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#1').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal1"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title1">'+ htmlData + '</h4><button class="close" id="close1" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body1">'+descrip+'<br/><br/>Answer: <input type="text" id="input1"></div><div class="modal-footer" id="footer1"><button class="btn btn-primary" data-dismiss="modal" id="done1">Check Answer</button></div></div></div></div>')
-                $("#myModal1").modal('show');
-                $('#close1').on('click', function() {
-                    $("#myModal1").modal('hide');
-                })
-                $('#done1').on('click', function() {
-                    if (answer != $('#input1').val()) {
-                        $('#input1').css("border", "1px solid red");
-                        $('#footer1').html('<button class="btn btn-primary" data-dismiss="modal" id="done1">Try Again</button>')
-                        return;
-                    } 
-                    $('#title1').html("You Won!");
-                    $('#body1').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/eyes-5067140_1280.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/fake.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/happy-new-year-4716276_1920.png" width="100" height="100"  ></li></ul>')
-                    $('#done1').remove();
-                    $('#footer1').html('<button class="btn btn-primary" data-dismiss="modal" id="finish1">Finish</button>')
-                    $('#finish1').on('click', function() {
-                        $('#1').css("background-color", "#00008b");
-                        $('#1').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#1').addClass("no-click");
-                        $("#myModal1").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#2').on('click', function() {
-         $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#2').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal2"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title2">'+ htmlData + '</h4><button class="close" id="close2" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body2">'+descrip+'<br/><br/>Answer: <input type="text" id="input2"></div><div class="modal-footer" id="footer2"><button class="btn btn-primary" data-dismiss="modal" id="done2">Check Answer</button></div></div></div></div>')
-                $("#myModal2").modal('show');
-                $('#close2').on('click', function() {
-                    $("#myModal2").modal('hide');
-                })
-                $('#done2').on('click', function() {
-                    if (answer != $('#input2').val()) {
-                        $('#input2').css("border", "1px solid red");
-                        $('#footer2').html('<button class="btn btn-primary" data-dismiss="modal" id="done2">Try Again</button>')
-                        return;
-                    } 
-                    $('#title2').html("You Won!");
-                    $('#body2').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/happy.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/lips.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/mask.png" width="100" height="100"  ></li></ul>')
-                    $('#done2').remove();
-                    $('#footer2').html('<button class="btn btn-primary" data-dismiss="modal" id="finish2">Finish</button>')
-                    $('#finish2').on('click', function() {
-                        $('#2').css("background-color", "#00008b");
-                        $('#2').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#2').addClass("no-click");
-                        $("#myModal2").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#3').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#3').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal3"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title3">'+ htmlData + '</h4><button class="close" id="close3" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body3">'+descrip+'<br/><br/>Answer: <input type="text" id="input3"></div><div class="modal-footer" id="footer3"><button class="btn btn-primary" data-dismiss="modal" id="done3">Check Answer</button></div></div></div></div>')
-                $("#myModal3").modal('show');
-                $('#close3').on('click', function() {
-                    $("#myModal3").modal('hide');
-                })
-                $('#done3').on('click', function() {
-                    if (answer != $('#input3').val()) {
-                        $('#input3').css("border", "1px solid red");
-                        $('#footer3').html('<button class="btn btn-primary" data-dismiss="modal" id="done3">Try Again</button>')
-                        return;
-                    } 
-                    $('#title3').html("You Won!");
-                    $('#body3').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/mouth.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/mustache.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/peaceful.webp" width="100" height="100"  ></li></ul>')
-                    $('#done3').remove();
-                    $('#footer3').html('<button class="btn btn-primary" data-dismiss="modal" id="finish3">Finish</button>')
-                    $('#finish3').on('click', function() {
-                        $('#3').css("background-color", "#00008b");
-                        $('#3').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#3').addClass("no-click");
-                        $("#myModal3").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#4').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#4').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal4"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title4">'+ htmlData + '</h4><button class="close" id="close4" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body4">'+descrip+'<br/><br/>Answer: <input type="text" id="input4"></div><div class="modal-footer" id="footer4"><button class="btn btn-primary" data-dismiss="modal" id="done4">Check Answer</button></div></div></div></div>')
-                $("#myModal4").modal('show');
-                $('#close4').on('click', function() {
-                    $("#myModal4").modal('hide');
-                })
-                $('#done4').on('click', function() {
-                    if (answer != $('#input4').val()) {
-                        $('#input4').css("border", "1px solid red");
-                        $('#footer4').html('<button class="btn btn-primary" data-dismiss="modal" id="done4">Try Again</button>')
-                        return;
-                    } 
-                    $('#title4').html("You Won!");
-                    $('#body4').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/rainbow_unicorn.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/smiley.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/snowman.webp" width="100" height="100"  ></li></ul>')
-                    $('#done4').remove();
-                    $('#footer4').html('<button class="btn btn-primary" data-dismiss="modal" id="finish4">Finish</button>')
-                    $('#finish4').on('click', function() {
-                        $('#4').css("background-color", "#00008b");
-                        $('#4').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#4').addClass("no-click");
-                        $("#myModal4").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#5').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#5').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal5"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title5">'+ htmlData + '</h4><button class="close" id="close5" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body5">'+descrip+'<br/><br/>Answer: <input type="text" id="input5"></div><div class="modal-footer" id="footer5"><button class="btn btn-primary" data-dismiss="modal" id="done5">Check Answer</button></div></div></div></div>')
-                $("#myModal5").modal('show');
-                $('#close5').on('click', function() {
-                    $("#myModal5").modal('hide');
-                })
-                $('#done5').on('click', function() {
-                    if (answer != $('#input5').val()) {
-                        $('#input5').css("border", "1px solid red");
-                        $('#footer5').html('<button class="btn btn-primary" data-dismiss="modal" id="done5">Try Again</button>')
-                        return;
-                    } 
-                    $('#title5').html("You Won!");
-                    $('#body5').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/spiral_face.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/unicorn.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/woman_face.webp" width="100" height="100"  ></li></ul>')
-                    $('#done5').remove();
-                    $('#footer5').html('<button class="btn btn-primary" data-dismiss="modal" id="finish5">Finish</button>')
-                    $('#finish5').on('click', function() {
-                        $('#5').css("background-color", "#00008b");
-                        $('#5').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#5').addClass("no-click");
-                        $("#myModal5").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#6').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#6').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal6"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title6">'+ htmlData + '</h4><button class="close" id="close6" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body6">'+descrip+'<br/><br/>Answer: <input type="text" id="input6"></div><div class="modal-footer" id="footer6"><button class="btn btn-primary" data-dismiss="modal" id="done6">Check Answer</button></div></div></div></div>')
-                $("#myModal6").modal('show');
-                $('#close6').on('click', function() {
-                    $("#myModal6").modal('hide');
-                })
-                $('#done6').on('click', function() {
-                    if (answer != $('#input6').val()) {
-                        $('#input6').css("border", "1px solid red");
-                        $('#footer6').html('<button class="btn btn-primary" data-dismiss="modal" id="done6">Try Again</button>')
-                        return;
-                    } 
-                    $('#title6').html("You Won!");
-                    $('#body6').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/hat/america.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/blue_hat.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/hat/cap-1266204_1280.png" width="100" height="100"  ></li></ul>')
-                    $('#done6').remove();
-                    $('#footer6').html('<button class="btn btn-primary" data-dismiss="modal" id="finish6">Finish</button>')
-                    $('#finish6').on('click', function() {
-                        $('#6').css("background-color", "#00008b");
-                        $('#6').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#6').addClass("no-click");
-                        $("#myModal6").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#7').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#7').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal7"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title7">'+ htmlData + '</h4><button class="close" id="close7" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body7">'+descrip+'<br/><br/>Answer: <input type="text" id="input7"></div><div class="modal-footer" id="footer7"><button class="btn btn-primary" data-dismiss="modal" id="done7">Check Answer</button></div></div></div></div>')
-                $("#myModal7").modal('show');
-                $('#close7').on('click', function() {
-                    $("#myModal7").modal('hide');
-                })
-                $('#done7').on('click', function() {
-                    if (answer != $('#input7').val()) {
-                        $('#input7').css("border", "1px solid red");
-                        $('#footer7').html('<button class="btn btn-primary" data-dismiss="modal" id="done7">Try Again</button>')
-                        return;
-                    } 
-                    $('#title7').html("You Won!");
-                    $('#body7').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/hat/chef.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/cowboy-hat-2801582_1920.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/hat/fedora.webp" width="100" height="100"  ></li></ul>')
-                    $('#done7').remove();
-                    $('#footer7').html('<button class="btn btn-primary" data-dismiss="modal" id="finish7">Finish</button>')
-                    $('#finish7').on('click', function() {
-                        $('#7').css("background-color", "#00008b");
-                        $('#7').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#7').addClass("no-click");
-                        $("#myModal7").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#8').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#8').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal8"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title8">'+ htmlData + '</h4><button class="close" id="close8" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body8">'+descrip+'<br/><br/>Answer: <input type="text" id="input8"></div><div class="modal-footer" id="footer8"><button class="btn btn-primary" data-dismiss="modal" id="done8">Check Answer</button></div></div></div></div>')
-                $("#myModal8").modal('show');
-                $('#close8').on('click', function() {
-                    $("#myModal8").modal('hide');
-                })
-                $('#done8').on('click', function() {
-                    if (answer != $('#input8').val()) {
-                        $('#input8').css("border", "1px solid red");
-                        $('#footer8').html('<button class="btn btn-primary" data-dismiss="modal" id="done8">Try Again</button>')
-                        return;
-                    } 
-                    $('#title8').html("You Won!");
-                    $('#body8').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/hat/green_hat.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/kitten-hat.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/hat/pink_hat.webp" width="100" height="100"  ></li></ul>')
-                    $('#done8').remove();
-                    $('#footer8').html('<button class="btn btn-primary" data-dismiss="modal" id="finish8">Finish</button>')
-                    $('#finish8').on('click', function() {
-                        $('#8').css("background-color", "#00008b");
-                        $('#8').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#8').addClass("no-click");
-                        $("#myModal8").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#9').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#9').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal9"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title9">'+ htmlData + '</h4><button class="close" id="close9" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body9">'+descrip+'<br/><br/>Answer: <input type="text" id="input9"></div><div class="modal-footer" id="footer9"><button class="btn btn-primary" data-dismiss="modal" id="done9">Check Answer</button></div></div></div></div>')
-                $("#myModal9").modal('show');
-                $('#close9').on('click', function() {
-                    $("#myModal9").modal('hide');
-                })
-                $('#done9').on('click', function() {
-                    if (answer != $('#input9').val()) {
-                        $('#input9').css("border", "1px solid red");
-                        $('#footer9').html('<button class="btn btn-primary" data-dismiss="modal" id="done9">Try Again</button>')
-                        return;
-                    } 
-                    $('#title9').html("You Won!");
-                    $('#body9').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/hat/purple_hat.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/santa.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/blue_pink_shoes.webp" width="100" height="100"  ></li></ul>')
-                    $('#done9').remove();
-                    $('#footer9').html('<button class="btn btn-primary" data-dismiss="modal" id="finish9">Finish</button>')
-                    $('#finish9').on('click', function() {
-                        $('#9').css("background-color", "#00008b");
-                        $('#9').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#9').addClass("no-click");
-                        $("#myModal9").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#10').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#10').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal10"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title10">'+ htmlData + '</h4><button class="close" id="close10" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body10">'+descrip+'<br/><br/>Answer: <input type="text" id="input10"></div><div class="modal-footer" id="footer10"><button class="btn btn-primary" data-dismiss="modal" id="done10">Check Answer</button></div></div></div></div>')
-                $("#myModal10").modal('show');
-                $('#close10').on('click', function() {
-                    $("#myModal10").modal('hide');
-                })
-                $('#done10').on('click', function() {
-                    if (answer != $('#input10').val()) {
-                        $('#input10').css("border", "1px solid red");
-                        $('#footer10').html('<button class="btn btn-primary" data-dismiss="modal" id="done10">Try Again</button>')
-                        return;
-                    } 
-                    $('#title10').html("You Won!");
-                    $('#body10').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/shoe/blue_shoes.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/shoe/gray_pink_shoes.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/high_heels.png" width="100" height="100"  ></li></ul>')
-                    $('#done10').remove();
-                    $('#footer10').html('<button class="btn btn-primary" data-dismiss="modal" id="finish10">Finish</button>')
-                    $('#finish10').on('click', function() {
-                        $('#10').css("background-color", "#00008b");
-                        $('#10').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#10').addClass("no-click");
-                        $("#myModal10").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#11').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#11').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal11"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title11">'+ htmlData + '</h4><button class="close" id="close11" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body11">'+descrip+'<br/><br/>Answer: <input type="text" id="input11"></div><div class="modal-footer" id="footer11"><button class="btn btn-primary" data-dismiss="modal" id="done11">Check Answer</button></div></div></div></div>')
-                $("#myModal11").modal('show');
-                $('#close11').on('click', function() {
-                    $("#myModal11").modal('hide');
-                })
-                $('#done11').on('click', function() {
-                    if (answer != $('#input11').val()) {
-                        $('#input11').css("border", "1px solid red");
-                        $('#footer11').html('<button class="btn btn-primary" data-dismiss="modal" id="done11">Try Again</button>')
-                        return;
-                    } 
-                    $('#title11').html("You Won!");
-                    $('#body11').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/shoe/pink_shoes.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/shoe/roll.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/sneakers-2798332_1920.png" width="100" height="100"  ></li></ul>')
-                    $('#done11').remove();
-                    $('#footer11').html('<button class="btn btn-primary" data-dismiss="modal" id="finish11">Finish</button>')
-                    $('#finish11').on('click', function() {
-                        $('#11').css("background-color", "#00008b");
-                        $('#11').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#11').addClass("no-click");
-                        $("#myModal11").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#12').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#12').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal12"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title12">'+ htmlData + '</h4><button class="close" id="close12" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body12">'+descrip+'<br/><br/>Answer: <input type="text" id="input12"></div><div class="modal-footer" id="footer12"><button class="btn btn-primary" data-dismiss="modal" id="done12">Check Answer</button></div></div></div></div>')
-                $("#myModal12").modal('show');
-                $('#close12').on('click', function() {
-                    $("#myModal12").modal('hide');
-                })
-                $('#done12').on('click', function() {
-                    if (answer != $('#input12').val()) {
-                        $('#input12').css("border", "1px solid red");
-                        $('#footer12').html('<button class="btn btn-primary" data-dismiss="modal" id="done12">Try Again</button>')
-                        return;
-                    } 
-                    $('#title12').html("You Won!");
-                    $('#body12').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/accessories/cute_necklace.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/accessories/gold_chain_2.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/accessories/gold-chain.png" width="100" height="100"  ></li></ul>')
-                    $('#done12').remove();
-                    $('#footer12').html('<button class="btn btn-primary" data-dismiss="modal" id="finish12">Finish</button>')
-                    $('#finish12').on('click', function() {
-                        $('#12').css("background-color", "#00008b");
-                        $('#12').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#12').addClass("no-click");
-                        $("#myModal12").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#13').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#13').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal13"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title13">'+ htmlData + '</h4><button class="close" id="close13" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body13">'+descrip+'<br/><br/>Answer: <input type="text" id="input13"></div><div class="modal-footer" id="footer13"><button class="btn btn-primary" data-dismiss="modal" id="done13">Check Answer</button></div></div></div></div>')
-                $("#myModal13").modal('show');
-                $('#close13').on('click', function() {
-                    $("#myModal13").modal('hide');
-                })
-                $('#done13').on('click', function() {
-                    if (answer != $('#input13').val()) {
-                        $('#input13').css("border", "1px solid red");
-                        $('#footer13').html('<button class="btn btn-primary" data-dismiss="modal" id="done13">Try Again</button>')
-                        return;
-                    } 
-                    $('#title13').html("You Won!");
-                    $('#body13').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/tools/cat_bag.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/tools/leather_suitcase.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/tools/money_bag.webp" width="100" height="100"  ></li></ul>')
-                    $('#done13').remove();
-                    $('#footer13').html('<button class="btn btn-primary" data-dismiss="modal" id="finish13">Finish</button>')
-                    $('#finish13').on('click', function() {
-                        $('#13').css("background-color", "#00008b");
-                        $('#13').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#13').addClass("no-click");
-                        $("#myModal13").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#14').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#14').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal14"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title14">'+ htmlData + '</h4><button class="close" id="close14" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body14">'+descrip+'<br/><br/>Answer: <input type="text" id="input14"></div><div class="modal-footer" id="footer14"><button class="btn btn-primary" data-dismiss="modal" id="done14">Check Answer</button></div></div></div></div>')
-                $("#myModal14").modal('show');
-                $('#close14').on('click', function() {
-                    $("#myModal14").modal('hide');
-                })
-                $('#done14').on('click', function() {
-                    if (answer != $('#input14').val()) {
-                        $('#input14').css("border", "1px solid red");
-                        $('#footer14').html('<button class="btn btn-primary" data-dismiss="modal" id="done14">Try Again</button>')
-                        return;
-                    } 
-                    $('#title14').html("You Won!");
-                    $('#body14').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/tools/wallet1.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/tools/black_purse.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/tools/suitcase.webp" width="100" height="100"  ></li></ul>')
-                    $('#done14').remove();
-                    $('#footer14').html('<button class="btn btn-primary" data-dismiss="modal" id="finish14">Finish</button>')
-                    $('#finish14').on('click', function() {
-                        $('#14').css("background-color", "#00008b");
-                        $('#14').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#14').addClass("no-click");
-                        $("#myModal14").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#15').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#15').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal15"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title15">'+ htmlData + '</h4><button class="close" id="close15" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body15">'+descrip+'<br/><br/>Answer: <input type="text" id="input15"></div><div class="modal-footer" id="footer15"><button class="btn btn-primary" data-dismiss="modal" id="done15">Check Answer</button></div></div></div></div>')
-                $("#myModal15").modal('show');
-                $('#close15').on('click', function() {
-                    $("#myModal15").modal('hide');
-                })
-                $('#done15').on('click', function() {
-                    if (answer != $('#input15').val()) {
-                        $('#input15').css("border", "1px solid red");
-                        $('#footer15').html('<button class="btn btn-primary" data-dismiss="modal" id="done15">Try Again</button>')
-                        return;
-                    } 
-                    $('#title15').html("You Won!");
-                    $('#body15').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/sunglasses/dark_pink_sun.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/sunglasses/pink_sun.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/sunglasses/black_white_sun.webp" width="100" height="100"  ></li></ul>')
-                    $('#done15').remove();
-                    $('#footer15').html('<button class="btn btn-primary" data-dismiss="modal" id="finish15">Finish</button>')
-                    $('#finish15').on('click', function() {
-                        $('#15').css("background-color", "#00008b");
-                        $('#15').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#15').addClass("no-click");
-                        $("#myModal15").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#16').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#16').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal16"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title16">'+ htmlData + '</h4><button class="close" id="close16" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body16">'+descrip+'<br/><br/>Answer: <input type="text" id="input16"></div><div class="modal-footer" id="footer16"><button class="btn btn-primary" data-dismiss="modal" id="done16">Check Answer</button></div></div></div></div>')
-                $("#myModal16").modal('show');
-                $('#close16').on('click', function() {
-                    $("#myModal16").modal('hide');
-                })
-                $('#done16').on('click', function() {
-                    if (answer != $('#input16').val()) {
-                        $('#input16').css("border", "1px solid red");
-                        $('#footer16').html('<button class="btn btn-primary" data-dismiss="modal" id="done16">Try Again</button>')
-                        return;
-                    } 
-                    $('#title16').html("You Won!");
-                    $('#body16').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/sunglasses/beard_sun.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/sunglasses/unicorn_sun.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/sunglasses/purple_sun.png" width="100" height="100"  ></li></ul>')
-                    $('#done16').remove();
-                    $('#footer16').html('<button class="btn btn-primary" data-dismiss="modal" id="finish16">Finish</button>')
-                    $('#finish16').on('click', function() {
-                        $('#16').css("background-color", "#00008b");
-                        $('#16').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#16').addClass("no-click");
-                        $("#myModal16").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#17').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#17').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal17"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title17">'+ htmlData + '</h4><button class="close" id="close17" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body17">'+descrip+'<br/><br/>Answer: <input type="text" id="input17"></div><div class="modal-footer" id="footer17"><button class="btn btn-primary" data-dismiss="modal" id="done17">Check Answer</button></div></div></div></div>')
-                $("#myModal17").modal('show');
-                $('#close17').on('click', function() {
-                    $("#myModal17").modal('hide');
-                })
-                $('#done17').on('click', function() {
-                    if (answer != $('#input17').val()) {
-                        $('#input17').css("border", "1px solid red");
-                        $('#footer17').html('<button class="btn btn-primary" data-dismiss="modal" id="done17">Try Again</button>')
-                        return;
-                    } 
-                    $('#title17').html("You Won!");
-                    $('#body17').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/sunglasses/black_sun.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/face/3d_face.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/face/marx.webp" width="100" height="100"  ></li></ul>')
-                    $('#done17').remove();
-                    $('#footer17').html('<button class="btn btn-primary" data-dismiss="modal" id="finish17">Finish</button>')
-                    $('#finish17').on('click', function() {
-                        $('#17').css("background-color", "#00008b");
-                        $('#17').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#17').addClass("no-click");
-                        $("#myModal17").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    })
-    $('#18').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#18').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal18"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title18">'+ htmlData + '</h4><button class="close" id="close18" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body18">'+descrip+'<br/><br/>Answer: <input type="text" id="input18"></div><div class="modal-footer" id="footer18"><button class="btn btn-primary" data-dismiss="modal" id="done18">Check Answer</button></div></div></div></div>')
-                $("#myModal18").modal('show');
-                $('#close18').on('click', function() {
-                    $("#myModal18").modal('hide');
-                })
-                $('#done18').on('click', function() {
-                    if (answer != $('#input18').val()) {
-                        $('#input18').css("border", "1px solid red");
-                        $('#footer18').html('<button class="btn btn-primary" data-dismiss="modal" id="done18">Try Again</button>')
-                        return;
-                    } 
-                    $('#title18').html("You Won!");
-                    $('#body18').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/shoe/pumps.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/shoe/danceshoes.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/blackboots.webp" width="100" height="100"  ></li></ul>')
-                    $('#done18').remove();
-                    $('#footer18').html('<button class="btn btn-primary" data-dismiss="modal" id="finish18">Finish</button>')
-                    $('#finish18').on('click', function() {
-                        $('#18').css("background-color", "#00008b");
-                        $('#18').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#18').addClass("no-click");
-                        $("#myModal18").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    $('#19').on('click', function() {
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                id = $('#19').data("id");
-                htmlData = data[id].name 
-                descrip = data[id].desc 
-                answer = data[id].flag 
-                cont.append('<div class="modal" id="myModal19"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title19">'+ htmlData + '</h4><button class="close" id="close19" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body19">'+descrip+'<br/><br/>Answer: <input type="text" id="input19"></div><div class="modal-footer" id="footer19"><button class="btn btn-primary" data-dismiss="modal" id="done19">Check Answer</button></div></div></div></div>')
-                $("#myModal19").modal('show');
-                $('#close19').on('click', function() {
-                    $("#myModal19").modal('hide');
-                })
-                $('#done19').on('click', function() {
-                    if (answer != $('#input19').val()) {
-                        $('#input19').css("border", "1px solid red");
-                        $('#footer19').html('<button class="btn btn-primary" data-dismiss="modal" id="done19">Try Again</button>')
-                        return;
-                    } 
-                    $('#title19').html("You Won!");
-                    $('#body19').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/shoe/brownboots.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/wig/blackwig.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/wig/blue.webp" width="100" height="100"  ></li></ul>')
-                    $('#done19').remove();
-                    $('#footer19').html('<button class="btn btn-primary" data-dismiss="modal" id="finish19">Finish</button>')
-                    $('#finish19').on('click', function() {
-                        $('#19').css("background-color", "#00008b");
-                        $('#19').html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#19').addClass("no-click");
-                        $("#myModal19").modal('hide');  
-                    })
-                })
-            }
-        });
-        return false;
-    }) 
-    /*$('#done').on('click', function() {
-        infoModal.show();
-        var title = $('#title').html();
-        var id = 0;
-        $.ajax({
-            type: "GET",
-            url: '../static/challenges.json',
-            dataType: 'json',
-            success: function(data) {
-                for(var i = 0; i < data.length; i++) {
-                    if(data[i].name == title) {
-                        id = i;
-                        break;
-                    }
-                }
-                var input = $('#body').find('input:text').val();
-                if(data[id].flag == input) {
-                    infoModal.find('.modal-title').html('You Won!')
-                    infoModal.find('#done').remove();
-                    console.log(id)
-                    switch (id) {
-                        case 0:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/mask.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/cowboy-hat-2801582_1920.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/blue_shoes.png" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 1:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/fake.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/america.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/roll.png" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 2:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/happy-new-year-4716276_1920.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/cap-1266204_1280.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/sneakers-2798332_1920.png" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 3:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/eyes-5067140_1280.png" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/santa.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/high_heels.png" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 4:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/woman_face.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/green_hat.png" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/pink_shoes.webp" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 5:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/blue_eyes.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/kitten-hat.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/gray_pink_shoes.webp" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 6:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/lips.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/pink_hat.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/blue_pink_shoes.webp" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 7:
-                            infoModal.find('.modal-body').html('<ul style="list-style-type: none;"><li style="list-style-type: none;"><img src="/static/face/rainbow_unicorn.webp" width="100" height="100" ></li><li style="list-style-type: none;"><img src="/static/hat/fedora.webp" width="100" height="100"  ></li><li style="list-style-type: none;"><img src="/static/shoe/purple_hat.webp" width="100" height="100"  ></li></ul>')
-                            break;
-                        case 8:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 9:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 10:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 11:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 12:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 13:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 14:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 15:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 16:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 17:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 18:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                        case 19:
-                            infoModal.find('.modal-body').html('<ul><li><img src="" width="50" height="50" ></li><li><img src="" width="50" height="50"  ></li><li><img src="" width="50" height="50"  ></li></ul>')
-                            break;
-                    }
-                    infoModal.find('.modal-footer').html('<button class="btn btn-primary" data-dismiss="modal" id="finish">Finish</button>')
-                    $('#finish').on('click', function() {
-                        htmlData = data[id].name 
-                        descrip = data[id].desc 
-                        infoModal.find('.modal-title').html(htmlData);
-                        infoModal.find('.modal-body').html(descrip);
-                        infoModal.find('.modal-body').append("<br/><br/>Answer: <input type='text'>");
-                        infoModal.find('.modal-footer').html('<button class="btn btn-primary" data-dismiss="modal" id="done">Check Answer</button>');
-                        $('#'+id).css("background-color", "#00008b");
-                        $('#'+id).html('<img src="/static/checkmark.webp" width="50" height="50">')
-                        $('#'+id).prop("disabled", true);
-                        infoModal.hide();
-                    })
-                } else {
-                    infoModal.find('.modal-body').find('input').css("border", "1px solid red");
-                    infoModal.find('#done').html('Try Again');
-                }
-                infoModal.show()
-                $('.close').on('click', function() {
-                    htmlData = data[id].name 
-                    descrip = data[id].desc 
-                    infoModal.find('.modal-title').html(htmlData);
-                    infoModal.find('.modal-body').html(descrip);
-                    infoModal.find('.modal-body').append("<br/><br/>Answer: <input type='text'>");
-                    infoModal.find('.modal-footer').html('<button class="btn btn-primary" data-dismiss="modal" id="done">Check Answer</button>');
-                    infoModal.hide();
-                })
-            }
-        })
-    }) */
+                $('#done0').on('click',  function() {
+			fetch('/submitchal/',{
+				method: 'POST',
+				headers:{
+					'Content-Type': 'application/json'
+				},
+				body:JSON.stringify({
+					id,
+					flag: $('#input0').val()
+				})
 
+			}).then(res=>res.json()).then(res=>{
+				console.log(res);
+				if(res.success){
+				    $('#title0').html("You Won!");
+					const prizes = res.prizes.map(prize=>`<li style="list-style-type: none;"><img class="prize" challengeId="${id}" id="${prize.id}" src="${prize.url}" width="100" height="100" ></li>`);
+					$('#body0').html(`<ul style="list-style-type: none;">${prizes.join('OR')}</ul>`)
+					$('.prize').on('click',addPrize);
+				    $('#done0').remove();
+				    $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="finish0">Skip</button>')
+				    $('#finish0').on('click', function() {
+					$('#0').css("background-color", "#00008b");
+					$('#0').html('<img src="/static/checkmark.webp" width="50" height="50">')
+					$('#0').addClass("no-click");
+					$("#myModal0").modal('hide');
+				    })
+				    chalbtn.disabled = true;
+				} else {
+					$('#input0').css("border", "1px solid red");
+					$('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
+				}
+			}).catch(e=>{
+				console.error(e)
+			});
+
+                })
+        return false;
+    })
 })(jQuery);
 </script>
 </html>

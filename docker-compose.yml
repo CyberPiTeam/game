@@ -1,8 +1,16 @@
 version: "3.0"
 services:
+        nginx:
+                build: 
+                        dockerfile: 'nginx/Dockerfile'
+                        context: '.'
+                hostname: 'nginx'
+                ports:
+                - "8000:80"
+                restart: 'always'
+                depends_on:
+                        - gamification
         gamification:
                 build: .
                 hostname: 'gamification'
-                ports:
-                - "80:8000"
                 restart: 'always'

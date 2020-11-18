@@ -35,7 +35,6 @@
                 {% csrf_token %}
                 <!--Allow user to start playing game only if the user is logged in -->
                 {% if user.is_authenticated %}
-                    <!--<p id="session">Hi {{ user.get_username }}!</p>-->
                     <h1 class="page_title bg">CyberPi Dress Up Game</h1>
                     <br/>
                     <a href="{% url 'pickfruit'%}"><button type="submit" class="btn btn-primary btn-block" id="play_btn">Play the Game</button></a>

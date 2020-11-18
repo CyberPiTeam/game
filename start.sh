@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 python manage.py migrate
 #set the port for the server to run on and address
-python manage.py runserver 0.0.0.0:8000
+gunicorn --workers=4 --bind=0.0.0.0:8000 cyberpi_dress_up_game.wsgi:application

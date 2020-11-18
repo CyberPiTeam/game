@@ -1,0 +1,148 @@
+[    
+    {
+        "category":"Shell",
+        "points":"100",
+        "name":"File Fetching",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c1 to access the relevant files for this challenge. In the directory, there is a file that has the flag. Read it out to the terminal and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man ls' and 'man cat'.",
+		"flag":"flag{file_reading_fun}"
+    },
+    {
+        "category":"Encoding",
+        "points":"100",
+        "name":"Base64 No More",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c6 to access the relevant files for this challenge. In the directory, there is a file that has a base64 encoded flag. Decode it and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man base64'.",
+		"flag":"flag{base64_no_more}"
+		
+    },
+    {
+        "category":"Network Services",
+        "points":"100",
+        "name":"DNS Deep Dive",
+		"desc":"Login to http://shell.cyberpi.local. There is a DNS server listening on port 53 at netchals.cyberpi.local. Query it for txt records for the cyberpi.local domain, and submit the flag it returns. For help with the relevant command for this challenge, type 'man dig'.",
+		"flag":"flag{dns_txt_record}"
+    },
+	{
+		"category":"Web",
+		"points":"100",
+		"name":"Out Of Site",
+		"desc":"Navigate to http://static.cyberpi.local in your browser. Find and submit the flag.",
+		"flag":"flag{comments_in_the_sky}"
+	},
+    {
+        "category":"Shell",
+        "points":"200",
+        "name":"Hidden File Searching",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c2 to access the relevant files for this challenge. In the directory, there is a hidden file that has the flag. Read it out to the terminal and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man ls' and 'man cat'.",
+		"flag":"flag{hidden_file_read}"
+		
+    },
+    {
+        "category":"Encoding",
+        "points":"200",
+        "name":"Hex Hunting",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c7 to access the relevant files for this challenge. In the directory, there is a file that has a hex encoded flag. Decode itand copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man xxd'.",
+		"flag":"flag{hex_lifted}"
+    },
+    {
+        "category":"Network Services",
+        "points":"200",
+        "name":"FTP",
+		"desc":"Login to http://shell.cyberpi.local. There is a FTP server listening on port 21 at netchals.cyberpi.local. Connect to it with the anonymous user and copy off the file with the flag. Read and submit the flag. For help with the relevant command for this challenge, type 'man ftp'.",
+		"flag":"flag{ftp_4_u_and_me}"
+    },
+	{
+		"category":"Web",
+		"points":"200",
+		"name":"Read Between The Lines",
+		"desc":"Navigate to http://readfile.cyberpi.local in your browser. The flag is located on disk of the webserver at '/etc/flag'. Find and submit the flag.",
+		"flag":"flag{unsafe_static_hosting}"
+	},
+	{
+        "category":"Shell",
+        "points":"300",
+        "name":"Find the Real File",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c3 to access the relevant files for this challenge. In the directory, there are a bunch of directories with fake flag files in them. Find the real one in the mix. Read it out to the terminal and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man ls' and 'man cat'.",
+		"flag":"flag{nice_recursive_ls}"
+		
+    },
+    {
+        "category":"Encoding",
+        "points":"300",
+        "name":"Tarball Unpacked",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c8 to access the relevant files for this challenge. In the directory, there is a tar archive of 3 files. Extract it and combine the pieces of flag and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man tar'.",
+		"flag":"flag{tarball_unpacked}"
+		
+    },
+    {
+        "category":"Network Services",
+        "points":"300",
+        "name":"Nmap Navigating",
+		"desc":"Login to http://shell.cyberpi.local. There is a network service listening on netchals.cyberpi.local somewhere in the range of ports 20000-30000 that when connected to with a raw TCP connection, will echo the flag. Find the port, connect to it, and submit the flag. For help with the relevant command for this challenge, type 'man nmap' and 'man nc'.",
+		"flag":"flag{scan_and_connect}"
+    },
+	{
+		"category":"Web",
+		"points":"300",
+		"name":"Artificial Admin",
+		"desc":"Navigate to http://flagrequest.cyberpi.local in your browser. Find and submit the flag.",
+		"flag":"flag{goofy_auth_checks}"
+	},
+    {
+        "category":"Shell",
+        "points":"400",
+        "name":"Shell Scripting",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c4 to access the relevant files for this challenge. In the directory, there is an executable script. Execute it to get the flag and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man sh'.",
+		"flag":"flag{script_executed}"
+		
+    },
+    {
+        "category":"Encoding",
+        "points":"400",
+        "name":"Gzip Is Cool",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c9 to access the relevant files for this challenge. In the directory, there is a compressed file containing the flag. Decompress it and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man gunzip'.",
+		"flag":"flag{gzip_is_cool}"
+		
+    },
+    {
+        "category":"Network Services",
+        "points":"400",
+        "name":"New Lock Same Key",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c14 to access the relevant files for this challenge. Using the provided key in the directory, ssh into student@netchals.cyberpi.local on port 2022 to get the flag. Note: Make sure to use the -p 2022 option to hit the challenge ssh port, instead of the management ssh port. For help with the relevant command for this challenge, type 'man ssh'.",
+		"flag":"flag{new_lock_same_key}"
+    },
+	{
+		"category":"Web",
+		"points":"400",
+		"name":"Crown Cookies",
+		"desc":"Navigate to http://cookiechal.cyberpi.local in your browser. Find and submit the flag.",
+		"flag":"flag{like_sugar_cookies}"
+	},
+	{
+        "category":"Shell",
+        "points":"500",
+        "name":"File Spotting",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c5 to access the relevant files for this challenge. In the directory, there is a file full of junk, but also the flag. Find the flag amongst the junk, and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man grep'.",
+		"flag":"flag{flag_in_a_file}"	
+    },
+	{
+        "category":"Encoding",
+        "points":"500",
+        "name":"Sha",
+		"desc":"Login to http://shell.cyberpi.local. Once you are greeted by the shell prompt, type cd /usr/share/challenges/c10 to access the relevant files for this challenge. In the directory, there is a file. Copy/paste the sha256 hash of it to the input box below. For help with the relevant command for this challenge, type 'man sha256sum'.",
+		"flag":"fb68f354d7da15b2b788c2b2a830882e3c2418f06e36392653afe12f1f085be3"
+    },
+    {
+        "category":"Network Services",
+        "points":"500",
+        "name":"Chain Curling",
+		"desc":"Login to http://shell.cyberpi.local. There is a page accessible at http://netchals.cyberpi.local. The page contains the path of the next page. This continues 200 times, and at the end, there is the flag. Follow your way down the chain, then find and submit the flag. For help with the relevant command for this challenge, type 'man curl' and 'man sh'.",
+		"flag":"flag{light_at_the_end}"
+    },
+	{
+		"category":"Web",
+		"points":"500",
+		"name":"Ping Ploy",
+		"desc":"Navigate to http://pingapp.cyberpi.local in your browser. The flag is located on disk of the webserver at '/etc/flag'. Find and submit the flag.",
+		"flag":"flag{sanitize_inputs_please}"
+	}
+]

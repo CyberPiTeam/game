@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ur+xi)3*wvy52#m5lvj9=_ozo%51*i9al(85f0b*#998((%&#r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','*']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1','*']
 
 
 # Application definition
@@ -127,3 +127,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "cyberpi_dress_up_game/media"),)
 CRISPY_TEMPLATE_PACK="bootstrap4"
 
 LOGIN_REDIRECT_URL = "/home"
+LOGIN_URL = "/login"
