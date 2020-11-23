@@ -7,8 +7,6 @@ challenges = json.loads(open("challenges.json","r").read())
 for i in range(0,len(prizes.prizes)):
     challenges[i%len(challenges)].get('prizes').append(prizes.prizes[i])
 
-print(challenges[0])
-
 
 def findChal(id):
     return next(chal for chal in challenges if chal.get('id')==id)

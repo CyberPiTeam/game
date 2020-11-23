@@ -26,22 +26,23 @@
         <section class="row">
             <section class="col-md-12">
                 <h3 id="page_title">Pick A Fruit</h3>
+                <p>Already picked? Go to <a href="{% url 'pickchallenge' %}">challenges.</a></p>
             </section>
         </section>
     </section>
     <br/>
     <section class="text-center container-fluid">
         <section class="row">
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="green_apple"><img src="/static/fruit/green_apple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="red_apple"><img src="/static/fruit/red_apple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="pinapple"><img src="/static/fruit/pinapple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="orange"><img src="/static/fruit/orange.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="green_apple"><img src="/static/fruit/green_apple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="red_apple"><img src="/static/fruit/red_apple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="pinapple"><img src="/static/fruit/pinapple.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="orange"><img src="/static/fruit/orange.webp" width="300" height="300"></a></section>
         </section>
         <section class="row">
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="pumpkin"><img src="/static/fruit/pumpkin.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="watermelon"><img src="/static/fruit/watermelon.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="mango"><img src="/static/fruit/mango.png" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="{% url 'pickchallenge'%}" id="strawberry"><img src="/static/fruit/strawberry.jpg" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="pumpkin"><img src="/static/fruit/pumpkin.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="watermelon"><img src="/static/fruit/watermelon.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="mango"><img src="/static/fruit/mango.png" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="strawberry"><img src="/static/fruit/strawberry.jpg" width="300" height="300"></a></section>
         </section>
     </section>
 {% else %}
@@ -65,6 +66,7 @@
 					})
 
 				}).then(res=>res.json()).then(res=>{
+					window.location.href = '/challenges';
 					console.log(res);
 				}).catch(e=>{
 					console.error(e)

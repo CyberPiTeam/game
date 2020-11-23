@@ -1,5 +1,5 @@
 from os import listdir
-categories = ["hat","shoe","face"]
+categories = ["body", "carry", "head", "shoe"]
 base = 'cyberpi_dress_up_game/media/'
 prizes = []
 for category in categories: 

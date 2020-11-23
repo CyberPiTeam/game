@@ -40,6 +40,7 @@
                     </div>
                     <!-- Use crispy forms in django to make form pretty -->
                     {{form | crispy}}
+                    {{form.errors}}
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                     <div class="text-center">
                         <p id="note">Not registered? <a href="{% url 'game-signup' %}">Sign Up</a></p>

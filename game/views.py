@@ -16,21 +16,26 @@ challenges = chals.challenges
 def start(request):
     return render(request, "game/home.html")
 
+
 def fruit(request):
     return render(request, "game/pickafruit.html")
 
-@login_required
+
 def challenge(request):
     context = {}
-    player = Player.objects.get(username=request.user)
+    try:
+        player = Player.objects.get(username=request.user)
+    except Player.DoesNotExist:
+        player = Player.objects.create(username=request.user)
     playerChals = copy.deepcopy(challenges)
     playerSolves = json.loads(player.solves)
     [chal.update(solved=playerSolves.get(chal.get('id')))  for chal in playerChals]
     context['challenges'] = playerChals
     context['fruit'] = player.fruit
     context['score'] = player.score
-    context['hat'] = player.hat;
-    context['shoes'] = player.shoe;
-    context['face'] = player.face;
+    context['head'] = player.head
+    context['shoe'] = player.shoe
+    context['body'] = player.body
+    context['carry'] = player.carry
     return render(request, 'game/challenges.html', context)
 

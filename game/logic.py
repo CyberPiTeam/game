@@ -34,14 +34,12 @@ def submitChal(request):
 @csrf_exempt
 def setFruit(request):
     body = json.loads(request.body)
-    #print(body)
-    #print(Player.objects.values_list())
     try:
         player = Player.objects.get(username=request.user)
         player.fruit = body.get('fruit')
-        player.save()
     except:
-        Player.objects.create(fruit=body.get('fruit'),username=request.user)
+        player = Player.objects.create(fruit=body.get('fruit'),username=request.user)
+    player.save()
     return JsonResponse({
             "success":True
         })

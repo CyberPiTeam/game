@@ -14,9 +14,9 @@
             background-color: #00008b;
             font-size: 7vh;
         }
-	.prize{
-	    cursor:pointer;
-	}
+        .prize{
+            cursor:pointer;
+        }
 	.solved{
 	    background-color:#007bff;
 	    border-color:#007bff;
@@ -25,8 +25,18 @@
             font-size: 10vh;
             color: #0610FB;
         }
-        #session {
+        .session {
             color:#0610FB;
+        }
+        #link1 {
+            position: absolute;
+            top:50px;
+            right: 100px;
+        }
+        #link2 {
+            position: absolute;
+            top: 80px;
+            right: 100px;
         }
         #warning {
             color: #0610FB;
@@ -41,25 +51,31 @@
             position: absolute;
             top: 25px;
             left: 170px;
-	    width:120px;
+	        width: 150px;
         }
-        #hat {
+        #head {
             position: absolute;
             top: 0px;
             left: 190px;
-	    width:80px;
+	        width:80px;
         }
         #shoe {
             position: absolute;
-            top: 95px;
+            top: 140px;
             left: 190px;
-	    width:60px;
+	        width:60px;
         }
-        #face {
+        #body {
             position: absolute;
-            top: 55px;
+            top: 50px;
             left: 200px;
-	    width:60px;
+	        width:60px;
+        }
+        #carry {
+            position: absolute;
+            top: 80px;
+            left: 100px;
+            width: 60px;
         }
         body {
             min-height: 600px;
@@ -71,17 +87,20 @@
     {% csrf_token %}
     <section class="text-center container-fluid">
         <section class="row">
-            <section class="col-md-12">
+            <section class="col-md-3">
 				<img id="fruit" src="{{fruit}}">
-				<img id="hat" src="{{hat}}">
-				<img id="shoe" src="{{shoes}}">
-				<img id="face" src="{{face}}">
+				<img id="head" src="{{head}}">
+				<img id="shoe" src="{{shoe}}">
+				<img id="body" src="{{body}}">
+                <img id="carry" src="{{carry}}">
             </section>
-        </section>
-        <section class="row">
-            <section class="col-md-12">
+            <section class="col-md-6">
                 <h3 id="page_title">Jeopardy Game</h3>
-		<p id="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
+		        <p class="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
+            </section>
+            <section class="col-md-3">
+                <p class="session" id="link1"><a href="{% url 'pickfruit' %}">Fruit Swap</a></p>
+                <p class="session" id="link2"><a href="{% url 'logout' %}">Logout</a></p>
             </section>
         </section>
     </section>
@@ -100,7 +119,7 @@
             </section>
             <section class="col-md-3">
                 <button class="btn btn-primary btn-block category no-click">Web</button>
-            </section>
+            </section> 
         </section>
         <br/>
 	{% for chal in challenges %}
@@ -114,7 +133,11 @@
 			{% endif %}
 		{% endif %}
             <section class="col-md-3">
-		    <button class="btn btn-primary btn-block level chalbtn {% if chal.solved == True %}solved{% endif %}" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
+                {% if chal.solved == True %}
+                    <button class="btn btn-primary btn-block level chalbtn" style="background-color:#00008b" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal"><img src="/static/checkmark.webp" width="45" height="45"></button>
+                {% else %}
+		            <button class="btn btn-primary btn-block level chalbtn" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
+                {% endif %}
             </section>
 	{% endfor %}
     </section>
@@ -154,16 +177,14 @@
     var cont = $('#container');
   $('.chalbtn').on('click', function() {
 	  	chalbtn = this;
-                htmlData = this.getAttribute('name');
-                descrip = this.getAttribute('desc');
+        htmlData = this.getAttribute('name');
+        descrip = this.getAttribute('desc');
 	  	id = this.id
 	  	solved = this.getAttribute('solved') === 'True';
-	  	//my fix for this isn't clean by any means and would love to think about rewriting in the spring if there is time
 	  	if(solved)
 	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done1">Solved</button></div></div></div></div>'
 	  	else
 	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary"  id="done0">Check Answer</button></div></div></div></div>'
-
                 $("#myModal0").modal('show');
                 $('#close0').on('click', function() {
                     $("#myModal0").modal('hide');
@@ -182,19 +203,16 @@
 			}).then(res=>res.json()).then(res=>{
 				console.log(res);
 				if(res.success){
-				    $('#title0').html("You Won!");
-					const prizes = res.prizes.map(prize=>`<li style="list-style-type: none;"><img class="prize" challengeId="${id}" id="${prize.id}" src="${prize.url}" width="100" height="100" ></li>`);
-					$('#body0').html(`<ul style="list-style-type: none;">${prizes.join('OR')}</ul>`)
+				    $('#title0').html("You won, choose one prize! 🏆");
+					const prizes = res.prizes.map(prize=>`<li style="list-style-type: none;display:inline;"><img class="prize" challengeId="${id}" id="${prize.id}" src="${prize.url}" width="100" height="100" ></li>`);
+					$('#body0').html(`<ul style="list-style-type: none;">${prizes.join(" ------- ")}</ul>`)
 					$('.prize').on('click',addPrize);
 				    $('#done0').remove();
 				    $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="finish0">Skip</button>')
 				    $('#finish0').on('click', function() {
-					$('#0').css("background-color", "#00008b");
-					$('#0').html('<img src="/static/checkmark.webp" width="50" height="50">')
-					$('#0').addClass("no-click");
-					$("#myModal0").modal('hide');
+                        $("#myModal0").modal('hide');  
 				    })
-				    chalbtn.disabled = true;
+                    chalbtn.disabled = true;
 				} else {
 					$('#input0').css("border", "1px solid red");
 					$('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
@@ -205,7 +223,7 @@
 
                 })
         return false;
-    })
+    }) 
 })(jQuery);
 </script>
 </html>
