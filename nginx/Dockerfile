@@ -1,5 +1,5 @@
 #grab nginx image
-FROM alpine
+FROM alpine:3.12.2
 
 #update package cache
 RUN apk update
