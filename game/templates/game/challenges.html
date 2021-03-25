@@ -7,39 +7,33 @@
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <style>
         .level {
-            background-color: #0610FB;
+            background-color: #1c9cd3;
+            border-color: #1c9cd3;
             font-size: 5vh;
         }
         .category {
-            background-color: #00008b;
+            background-color: #195d81;
+            border-color: #195d81;
             font-size: 7vh;
         }
         .prize{
             cursor:pointer;
         }
-	.solved{
-	    background-color:#007bff;
-	    border-color:#007bff;
-	}
         #page_title {
             font-size: 10vh;
-            color: #0610FB;
+            color: #195d81;
         }
         .session {
-            color:#0610FB;
+            color: #1c9cd3;
         }
-        #link1 {
-            position: absolute;
-            top:50px;
-            right: 100px;
+        a {
+            color: #1C9CD3; 
         }
-        #link2 {
-            position: absolute;
-            top: 80px;
-            right: 100px;
+        a:hover {
+            color: #F26D26; 
         }
         #warning {
-            color: #0610FB;
+            color: #1c9cd3;
             font: Montserrat;
             bold: 700;
             font-size: 17vh;
@@ -48,37 +42,137 @@
             pointer-events: none;
         }
         #fruit {
-            position: absolute;
+            position: relative;
             top: 25px;
-            left: 170px;
-	        width: 150px;
+            left: -5%;
+            z-index: 1;
         }
         #head {
             position: absolute;
-            top: 0px;
-            left: 190px;
-	        width:80px;
+            top: 5%;
+            width: 30%;
+            left: 30%;
+            z-index: 2;
         }
-        #shoe {
+        #eyes {
             position: absolute;
-            top: 140px;
-            left: 190px;
-	        width:60px;
+            top: 25%;
+            width: 30%;
+            left: 30%;
+            z-index: 2;
         }
-        #body {
+        #nose {
             position: absolute;
-            top: 50px;
-            left: 200px;
-	        width:60px;
+            top: 38%;
+            left: 35%;
+            width: 20%;
+            z-index: 2;
+        }
+        #mouth {
+            position: absolute;
+            top: 54%;
+            left: 35%;
+            width: 20%;
+            z-index: 2;
         }
         #carry {
             position: absolute;
-            top: 80px;
-            left: 100px;
-            width: 60px;
+            top: 60%;
+            right: 8%;
+            width: 20%;
+            z-index: 2;
         }
         body {
+            background-color: #fff;
             min-height: 600px;
+        }
+        .modal.left .modal-dialog,
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 320px;
+            height: 100%;
+            -webkit-transform: translate3d(0%, 0, 0);
+            -ms-transform: translate3d(0%, 0, 0);
+            -q-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+        }
+        .modal.left .modal-content {
+            height: 100%,
+            overflow-y: auto;
+        }
+        .modal.left .modal-body{
+            padding: 15px 15px 80px;
+        } 
+        .modal.left.fade .modal-dialog {
+            -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+            -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+            -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+        }
+        .modal.left.fade.in .modal-dialog {
+            left: 0;
+        }
+        .modal-content {
+            border-radius: 0;
+            border: none;
+        }
+        .modal-header {
+            border-bottom-color: #EEEEEE;
+            background-color: #FAFAFA;
+        }
+        #seeavatar {
+            color: #1c9cd3;
+            margin-top:15%;
+        }
+        #seeavatar:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color:white;
+        }
+        #gamereset {
+            color: #1c9cd3;
+        }
+        #gamereset:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color:white;
+        }
+        .btn-primary:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-primary:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-block:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-block:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color: white;
+        }
+        .btn:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color: white;
+        }
+        .level:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            font-size: 5vh;
+        }
+        .level:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            font-size: 5vh;
         }
     </style>
 </head>
@@ -88,19 +182,56 @@
     <section class="text-center container-fluid">
         <section class="row">
             <section class="col-md-3">
-				<img id="fruit" src="{{fruit}}">
-				<img id="head" src="{{head}}">
-				<img id="shoe" src="{{shoe}}">
-				<img id="body" src="{{body}}">
-                <img id="carry" src="{{carry}}">
+            <button type="button" id="seeavatar" class="btn btn-demo" data-toggle="modal" data-target="#viewAvatar">View Avatar</button>
+            <!-- Check Password Box -->
+            <div class="modal fade" id="checkPassword" tabindex="-1" role="dialog" aria-labelledby="enter password">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="resetgamemodaltitle">Reset Game</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body" id="passwordboxbody">
+                            Enter Password: <input type="password" id="entered_password">
+                        </div>
+                        <div class="modal-footer" id="thefooter">
+                            <button class="btn btn-primary" id="tryreset">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Avatar -->
+            <div class="modal left fade" id="viewAvatar" tabindex="-1" role="dialog" aria-labelledby="avatar">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="avatar">My Avatar</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <img id="fruit" src="{{fruit}}">
+                            <img id="head" src="{{head}}">
+                            <img id="eyes" src="{{eyes}}">
+                            <img id="nose" src="{{nose}}">
+                            <img id="mouth" src="{{mouth}}">
+                            <img id="carry" src="{{carry}}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             </section>
-            <section class="col-md-6">
+            <section class="col-md-6" style="margin-top:1%;">
                 <h3 id="page_title">Jeopardy Game</h3>
 		        <p class="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
             </section>
             <section class="col-md-3">
-                <p class="session" id="link1"><a href="{% url 'pickfruit' %}">Fruit Swap</a></p>
-                <p class="session" id="link2"><a href="{% url 'logout' %}">Logout</a></p>
+                <div style="margin-top:10%;">
+                    <p class="session" id="link1"><a href="{% url 'pickfruit' %}" style="color: #0610FB;">Fruit Swap</a></p>
+                    <p class="session" id="link2"><a href="{% url 'logout' %}" style="color: #0610FB;">Logout</a></p>
+                    <button type="button" class="btn btn-demo" data-toggle="modal" data-target="#checkPassword" style="color: #0610FB;">Reset Game</button>
+                    <p class="session" id="link3"><a href="{% url 'bonus_challenge' %}" style="color: #0610FB;">Bonus</a></p>
+                </div>
             </section>
         </section>
     </section>
@@ -123,6 +254,8 @@
         </section>
         <br/>
 	{% for chal in challenges %}
+	
+	
 		{% if forloop.counter0|divisibleby:4 %}
 			{% if forloop.counter0 != 0 %}
         			</section>
@@ -134,9 +267,9 @@
 		{% endif %}
             <section class="col-md-3">
                 {% if chal.solved == True %}
-                    <button class="btn btn-primary btn-block level chalbtn" style="background-color:#00008b" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal"><img src="/static/checkmark.webp" width="45" height="45"></button>
+                    <button class="btn btn-primary btn-block level chalbtn" style="background-color:#195d81;border-color:#195d81;" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" descstart = "{{ chal.desc_start }}" url = "{{ chal.url }}" descend = "{{ chal.desc_end }}" data-toggle="modal" data-target="#myModal"><img src="/static/checkmark.webp" width="45" height="45"></button>
                 {% else %}
-		            <button class="btn btn-primary btn-block level chalbtn" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" desc = "{{ chal.desc }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
+		            <button class="btn btn-primary btn-block level chalbtn" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" descstart = "{{ chal.desc_start }}" url = "{{ chal.url }}" descend = "{{ chal.desc_end }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
                 {% endif %}
             </section>
 	{% endfor %}
@@ -149,6 +282,28 @@
 <script type="text/javascript" src="/static/popper.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <script>
+    $('#tryreset').on('click',  function() {
+        fetch('/resetgame/', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                enteredpassword: $('#entered_password').val()
+            })
+        }).then(res=>res.json()).then(res=>{
+            if(res.success) { 
+                $('#resetgamemodaltitle').text("Resetting...");
+                window.location.reload();
+            } else {
+                $('#entered_password').val('')
+                $('#entered_password').css("border", "3px solid red");
+                $("#passwordboxbody").append("<br/><strong>Wrong Password</strong>")
+            }  
+        }).catch(e=>{
+            console.error(e)
+        });
+    });
 	function addPrize(e){
 		console.log(e,this);
 		const target = e.target;
@@ -170,35 +325,36 @@
 			console.log(res);
 			window.location.reload();
 		}).catch(e=>{
-			console.error(e)
+			console.error(e);
 		});
 	}
 (function($) {
-    var cont = $('#container');
   $('.chalbtn').on('click', function() {
 	  	chalbtn = this;
         htmlData = this.getAttribute('name');
-        descrip = this.getAttribute('desc');
+        descstart = this.getAttribute('descstart');
+        url = this.getAttribute('url');
+        descend = this.getAttribute('descend');
 	  	id = this.id
 	  	solved = this.getAttribute('solved') === 'True';
 	  	if(solved)
-	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done1">Solved</button></div></div></div></div>'
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descstart + '<a href="'+url+'">' + url + '</a>' + descend +'<br/><br/></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done1">Solved</button></div></div></div></div>'
 	  	else
-	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descrip+'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary"  id="done0">Check Answer</button></div></div></div></div>'
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descstart + '<a href="'+url+'">' + url + '</a>' + descend +'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary"  id="done0">Check Answer</button></div></div></div></div>'
                 $("#myModal0").modal('show');
                 $('#close0').on('click', function() {
                     $("#myModal0").modal('hide');
                 })
                 $('#done0').on('click',  function() {
-			fetch('/submitchal/',{
-				method: 'POST',
-				headers:{
-					'Content-Type': 'application/json'
-				},
-				body:JSON.stringify({
-					id,
-					flag: $('#input0').val()
-				})
+                    fetch('/submitchal/',{
+                        method: 'POST',
+                        headers:{
+                            'Content-Type': 'application/json'
+                        },
+                        body:JSON.stringify({
+                            id,
+                            flag: $('#input0').val()
+                        })
 
 			}).then(res=>res.json()).then(res=>{
 				console.log(res);
@@ -209,13 +365,17 @@
 					$('.prize').on('click',addPrize);
 				    $('#done0').remove();
 				    $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="finish0">Skip</button>')
-				    $('#finish0').on('click', function() {
-                        $("#myModal0").modal('hide');  
+				    $('#finish0').on('click', function() { 
+                        window.location.reload();
+				    })
+                    $('#close0').on('click', function() { 
+                        window.location.reload();
 				    })
                     chalbtn.disabled = true;
 				} else {
-					$('#input0').css("border", "1px solid red");
-					$('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
+					$('#input0').css("border", "3px solid red");
+                    $('#input0').val('');
+                    $("#body0").append("<br/><strong>Wrong Answer</strong>")
 				}
 			}).catch(e=>{
 				console.error(e)

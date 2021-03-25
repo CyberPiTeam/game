@@ -6,7 +6,7 @@ services:
                         context: '.'
                 hostname: 'nginx'
                 ports:
-                - "80:80"
+                - "8000:80"
                 restart: 'always'
                 depends_on:
                         - gamification

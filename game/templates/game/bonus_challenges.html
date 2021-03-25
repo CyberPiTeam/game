@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Challenge</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <style>
+        .level {
+            background-color: #0610FB;
+            font-size: 5vh;
+        }
+        .category {
+            background-color: #00008b;
+            font-size: 7vh;
+        }
+        .prize{
+            cursor:pointer;
+        }
+        .solved{
+            background-color:#007bff;
+            border-color:#007bff;
+        }
+        #page_title {
+            font-size: 10vh;
+            color: #0610FB;
+        }
+        .session {
+            color:#0610FB;
+        }
+        #link1 {
+            position: absolute;
+            top:50px;
+            right: 100px;
+        }
+        #link2 {
+            position: absolute;
+            top: 80px;
+            right: 100px;
+        }
+        #warning {
+            color: #0610FB;
+            font: Montserrat;
+            bold: 700;
+            font-size: 17vh;
+        }
+        .no-click {
+            pointer-events: none;
+        }
+        #fruit {
+            position: relative;
+            top: 25px;
+            left: -5%;
+            z-index: 1;
+        }
+        #head {
+            position: absolute;
+            top: 5%;
+            width: 30%;
+            left: 30%;
+            z-index: 2;
+        }
+        #eyes {
+            position: absolute;
+            top: 25%;
+            width: 30%;
+            left: 30%;
+            z-index: 2;
+        }
+        #nose {
+            position: absolute;
+            top: 38%;
+            left: 35%;
+            width: 20%;
+            z-index: 2;
+        }
+        #mouth {
+            position: absolute;
+            top: 54%;
+            left: 35%;
+            width: 20%;
+            z-index: 2;
+        }
+        #carry {
+            position: absolute;
+            top: 60%;
+            right: 8%;
+            width: 20%;
+            z-index: 2;
+        }
+        body {
+            min-height: 600px;
+        }
+        .modal.left .modal-dialog,
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 320px;
+            height: 100%;
+            -webkit-transform: translate3d(0%, 0, 0);
+            -ms-transform: translate3d(0%, 0, 0);
+            -q-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+        }
+        .modal.left .modal-content {
+            height: 100%,
+            overflow-y: auto;
+        }
+        .modal.left .modal-body{
+            padding: 15px 15px 80px;
+        } 
+        .modal.left.fade .modal-dialog {
+            -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+            -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+            -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+        }
+        .modal.left.fade.in .modal-dialog {
+            left: 0;
+        }
+        .modal-content {
+            border-radius: 0;
+            border: none;
+        }
+        .modal-header {
+            border-bottom-color: #EEEEEE;
+            background-color: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    {% csrf_token %}
+    <section class="text-center container-fluid">
+        <section class="row">
+            <section class="col-md-3">
+            <button type="button" class="btn btn-demo" data-toggle="modal" data-target="#viewAvatar" style="color: #0610FB;margin-top:15%;">View Avatar</button>
+            <!-- Avatar -->
+            <div class="modal left fade" id="viewAvatar" tabindex="-1" role="dialog" aria-labelledby="avatar">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="avatar">My Avatar</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <img id="fruit" src="{{fruit}}">
+                            <img id="head" src="{{head}}">
+                            <img id="eyes" src="{{eyes}}">
+                            <img id="nose" src="{{nose}}">
+                            <img id="mouth" src="{{mouth}}">
+                            <img id="carry" src="{{carry}}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </section>
+            <section class="col-md-6" style="margin-top:1%;">
+                <h3 id="page_title">BONUS Jeopardy Game</h3>
+		        <p class="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
+            </section>
+            <section class="col-md-3">
+                <p class="session" id="link1"><a href="{% url 'pickfruit' %}" style="color: #0610FB;">Fruit Swap</a></p>
+                <p class="session" id="link2"><a href="{% url 'logout' %}" style="color: #0610FB;">Logout</a></p>
+            </section>
+        </section>
+    </section>
+    <br/>
+    <section class="text-center container-fluid">
+	<section id="container"></section>
+        <section class="row">
+            <section class="col-md-3">
+                <button class="btn btn-primary btn-block category no-click">Bonus 1</button>
+            </section>
+            <section class="col-md-3">
+                <button class="btn btn-primary btn-block category no-click"> Bonus 2</button>
+            </section>
+             <section class="col-md-3">
+                <button class="btn btn-primary btn-block category no-click">Bonus 3</button>
+            </section>
+            <section class="col-md-3">
+                <button class="btn btn-primary btn-block category no-click">Bonus 4</button>
+            </section> 
+        </section>
+        <br/>
+	{% for chal in challenges %}
+	
+	
+		{% if forloop.counter0|divisibleby:4 %}
+			{% if forloop.counter0 != 0 %}
+        			</section>
+				<br>
+			{% endif %}
+			{% if forloop.counter0 != challenges|length %}
+        			<section class="row">
+			{% endif %}
+		{% endif %}
+            <section class="col-md-3">
+                {% if chal.solved == True %}
+                    <button class="btn btn-primary btn-block level chalbtn" style="background-color:#00008b" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" descstart = "{{ chal.desc_start }}" url = "{{ chal.url }}" descend = "{{ chal.desc_end }}" data-toggle="modal" data-target="#myModal"><img src="/static/checkmark.webp" width="45" height="45"></button>
+                {% else %}
+		            <button class="btn btn-primary btn-block level chalbtn" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" descstart = "{{ chal.desc_start }}" url = "{{ chal.url }}" descend = "{{ chal.desc_end }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
+                {% endif %}
+            </section>
+	{% endfor %}`
+    </section>
+    {% else %}
+        <p id="warning">You must be logged in to continue playing the game. Sign in <a href="../login">here.</a></p>
+    {% endif %}
+</body>
+<script type="text/javascript" src="/static/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/static/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script>
+	function addPrize(e){
+		console.log(e,this);
+		const target = e.target;
+		const id = target.id;
+		const src = target.getAttribute('src');
+		const challengeId = target.getAttribute('challengeId');
+		fetch('/chooseprize/',{
+			method: 'POST',
+			headers:{
+				'Content-Type': 'application/json'
+			},
+			body:JSON.stringify({
+				challengeId,
+				id,
+				src
+			})
+
+		}).then(res=>res.json()).then(res=>{
+			console.log(res);
+			window.location.reload();
+		}).catch(e=>{
+			console.error(e)
+		});
+	}
+(function($) {
+    var cont = $('#container');
+  $('.chalbtn').on('click', function() {
+	  	chalbtn = this;
+        htmlData = this.getAttribute('name');
+        descstart = this.getAttribute('descstart');
+        url = this.getAttribute('url');
+        descend = this.getAttribute('descend');
+	  	id = this.id
+	  	solved = this.getAttribute('solved') === 'True';
+	  	if(solved)
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descstart + '<a href="'+url+'">' + url + '</a>' + descend +'<br/><br/></div><div class="modal-footer" id="footer0"><button class="btn btn-primary" data-dismiss="modal" id="done1">Solved</button></div></div></div></div>'
+	  	else
+	  		container.innerHTML = '<div class="modal" id="myModal0"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="title0">'+ htmlData + '</h4><button class="close" id="close0" data-dismiss="modal">&times;</button></div><div class="modal-body" id="body0">'+descstart + '<a href="'+url+'">' + url + '</a>' + descend +'<br/><br/>Answer: <input type="text" id="input0"></div><div class="modal-footer" id="footer0"><button class="btn btn-primary"  id="done0">Check Answer</button></div></div></div></div>'
+                $("#myModal0").modal('show');
+                $('#close0').on('click', function() {
+                    $("#myModal0").modal('hide');
+                })
+                $('#done0').on('click',  function() {
+			fetch('/bsubmitchal/',{
+				method: 'POST',
+				headers:{
+					'Content-Type': 'application/json'
+				},
+				body:JSON.stringify({
+					id,
+					flag: $('#input0').val()
+				})
+
+			}).then(res=>res.json()).then(res=>{
+				console.log(res);
+				if(res.success){
+				    $('#title0').html("You won, choose one prize! 🏆");
+					const prizes = res.prizes.map(prize=>`<li style="list-style-type: none;display:inline;"><img class="prize" challengeId="${id}" id="${prize.id}" src="${prize.url}" width="100" height="100" ></li>`);
+					$('#body0').html(`<ul style="list-style-type: none;">${prizes.join(" ------- ")}</ul>`)
+					$('.prize').on('click',addPrize);
+				    $('#done0').remove();
+				    $('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="finish0">Skip</button>')
+				    $('#finish0').on('click', function() { 
+                        window.location.reload();
+				    })
+                    chalbtn.disabled = true;
+				} else {
+					$('#input0').css("border", "1px solid red");
+					$('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
+				}
+			}).catch(e=>{
+				console.error(e)
+			});
+
+                })
+        return false;
+    }) 
+})(jQuery);
+</script>
+</html>

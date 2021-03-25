@@ -1,0 +1,41 @@
+[    
+    {
+        "category":"Bonus 1",
+        "points":"100",
+        "name":"File Fhing",
+        "desc_start": "Login to ",
+		"url": "http://shell.cyberpi.local",
+		"desc_end": ". Once you are greeted by the shell prompt, type cd /usr/share/challenges/c1 to access the relevant files for this challenge. In the directory, there is a file that has the flag. Read it out to the terminal and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man ls' and 'man cat'.",
+        "flag":"flag{file_reading_fun}"
+    },
+    {
+        "category":"Encoding",
+        "points":"100",
+        "name":"Base64 No More",
+		"desc_start":"Login to ",
+		"url": "http://shell.cyberpi.local",
+        "desc_end": ". Once you are greeted by the shell prompt, type cd /usr/share/challenges/c6 to access the relevant files for this challenge. In the directory, there is a file that has a base64 encoded flag. Decode it and copy/paste the answer to the input box below. For help with the relevant command for this challenge, type 'man base64'.",
+        "flag":"flag{base64_no_more}"
+		
+    },
+    {
+        "category":"Network Services",
+        "points":"100",
+        "name":"DNS Deep Dive",
+		"desc_start":"Login to ",
+		"url": "http://shell.cyberpi.local",
+        "desc_end": ". There is a DNS server listening on port 53 at netchals.cyberpi.local. Query it for txt records for the cyberpi.local domain, and submit the flag it returns. For help with the relevant command for this challenge, type 'man dig'.",
+        "flag":"flag{dns_txt_record}"
+    },
+	{
+		"category":"Web",
+		"points":"100",
+		"name":"Out Of Site",
+		"desc_start":"Navigate to ",
+		"url": "http://static.cyberpi.local",
+        "desc_end": " in your browser. Find and submit the flag.",
+        "flag":"flag{comments_in_the_sky}"
+	}
+
+
+]

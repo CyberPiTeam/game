@@ -31,5 +31,6 @@ def signin(request):
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
+            return render(request, template_name="registration/login.html", context={"form":form})
     form = AuthenticationForm()
     return render(request=request, template_name="registration/login.html", context={"form":form})

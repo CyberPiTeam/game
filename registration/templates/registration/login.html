@@ -12,7 +12,7 @@
             padding-top: 20vh;
         }
         #form-title {
-            color: #0610FB;
+            color: #1C9CD3;
             font: Roboto;
             bold: 700;
             font-size: 35px;
@@ -28,6 +28,28 @@
             font-size: 14px;
             padding-top: 7px;
         }
+        .btn-primary {
+            background-color: #1C9CD3;
+            border-color: #1C9CD3;
+        }
+        .btn-primary:hover {
+            background-color: #F26D26;
+            border-color: #F26D26;
+        }
+        .btn-primary:active {
+            background-color: #F26D26;
+            border-color: #F26D26;
+        }
+        .btn-primary:focus {
+            background-color: #F26D26;
+            border-color: #F26D26;
+        }
+        a {
+            color: #1C9CD3; 
+        }
+        a:hover {
+            color: #F26D26; 
+        }
     </style>
 </head>
 <body>
@@ -40,7 +62,6 @@
                     </div>
                     <!-- Use crispy forms in django to make form pretty -->
                     {{form | crispy}}
-                    {{form.errors}}
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                     <div class="text-center">
                         <p id="note">Not registered? <a href="{% url 'game-signup' %}">Sign Up</a></p>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +9,20 @@
     <script type="text/javascript" src="/static/jquery-3.5.1.min.js"></script>
     <style>
         #warning {
-            color: #0610FB;
+            color: #1C9CD3;
             font: Montserrat;
             bold: 700;
             font-size: 17vh;
         }
         #page_title {
             font-size: 10vh;
-            color: #0610FB;
+            color: #1C9CD3;
+        }
+        a {
+            color: #1C9CD3; 
+        }
+        a:hover {
+            color: #F26D26; 
         }
     </style>
 </head>
@@ -26,23 +33,31 @@
         <section class="row">
             <section class="col-md-12">
                 <h3 id="page_title">Pick A Fruit</h3>
-                <p>Already picked? Go to <a href="{% url 'pickchallenge' %}">challenges.</a></p>
+                {% if fruit != "" %}
+                    <p>Already picked? Go to <a href="{% url 'pickchallenge' %}">challenges.</a></p>
+                {% endif %}
             </section>
         </section>
     </section>
     <br/>
     <section class="text-center container-fluid">
         <section class="row">
-            <section class="col-md-3 fruit"><a href="#" id="green_apple"><img src="/static/fruit/green_apple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="red_apple"><img src="/static/fruit/red_apple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="pinapple"><img src="/static/fruit/pinapple.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="orange"><img src="/static/fruit/orange.webp" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="green_apple"><img src="/static/fruit/green_apple.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="red_apple"><img src="/static/fruit/red_apple.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="pinapple"><img src="/static/fruit/peach.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="orange"><img src="/static/fruit/orange.png"></a></section>
         </section>
         <section class="row">
-            <section class="col-md-3 fruit"><a href="#" id="pumpkin"><img src="/static/fruit/pumpkin.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="watermelon"><img src="/static/fruit/watermelon.webp" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="mango"><img src="/static/fruit/mango.png" width="300" height="300"></a></section>
-            <section class="col-md-3 fruit"><a href="#" id="strawberry"><img src="/static/fruit/strawberry.jpg" width="300" height="300"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="pumpkin"><img src="/static/fruit/pumpkin.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="watermelon"><img src="/static/fruit/watermelon.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="mango"><img src="/static/fruit/pear.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="strawberry"><img src="/static/fruit/plum.png"></a></section>
+        </section>
+        <section class="row">
+            <section class="col-md-3 fruit"><a href="#" id="red_fruit"><img src="/static/fruit/red_fruit.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="coconut"><img src="/static/fruit/coconut.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="blueberry"><img src="/static/fruit/blueberry.png"></a></section>
+            <section class="col-md-3 fruit"><a href="#" id="cherry"><img src="/static/fruit/cherry.png"></a></section>
         </section>
     </section>
 {% else %}
@@ -69,7 +84,7 @@
 					window.location.href = '/challenges';
 					console.log(res);
 				}).catch(e=>{
-					console.error(e)
+					console.log(e)
 				});
 
 			});

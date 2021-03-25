@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Player
+
+# game database becomes visible on django's admin portal
+admin.site.register(Player)
