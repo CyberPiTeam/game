@@ -7,39 +7,33 @@
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <style>
         .level {
-            background-color: #0610FB;
+            background-color: #1c9cd3;
+            border-color: #1c9cd3;
             font-size: 5vh;
         }
         .category {
-            background-color: #00008b;
+            background-color: #195d81;
+            border-color: #195d81;
             font-size: 7vh;
         }
         .prize{
             cursor:pointer;
         }
-        .solved{
-            background-color:#007bff;
-            border-color:#007bff;
-        }
         #page_title {
             font-size: 10vh;
-            color: #0610FB;
+            color: #195d81;
         }
         .session {
-            color:#0610FB;
+            color: #1c9cd3;
         }
-        #link1 {
-            position: absolute;
-            top:50px;
-            right: 100px;
+        a {
+            color: #1C9CD3; 
         }
-        #link2 {
-            position: absolute;
-            top: 80px;
-            right: 100px;
+        a:hover {
+            color: #F26D26; 
         }
         #warning {
-            color: #0610FB;
+            color: #1c9cd3;
             font: Montserrat;
             bold: 700;
             font-size: 17vh;
@@ -89,6 +83,7 @@
             z-index: 2;
         }
         body {
+            background-color: #fff;
             min-height: 600px;
         }
         .modal.left .modal-dialog,
@@ -126,15 +121,85 @@
             border-bottom-color: #EEEEEE;
             background-color: #FAFAFA;
         }
+        #seeavatar {
+            color: #1c9cd3;
+            margin-top:15%;
+        }
+        #seeavatar:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color:white;
+        }
+        #gamereset {
+            color: #1c9cd3;
+        }
+        #gamereset:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color:white;
+        }
+        .btn-primary:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-primary:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-block:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn-block:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+        }
+        .btn:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color: white;
+        }
+        .btn:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            color: white;
+        }
+        .level:active {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            font-size: 5vh;
+        }
+        .level:hover {
+            background-color: #F99D3A;
+            border-color: #F99D3A;
+            font-size: 5vh;
+        }
     </style>
 </head>
 <body>
-    {% if user.is_authenticated %}
+   {% if user.is_authenticated %}
     {% csrf_token %}
     <section class="text-center container-fluid">
         <section class="row">
             <section class="col-md-3">
-            <button type="button" class="btn btn-demo" data-toggle="modal" data-target="#viewAvatar" style="color: #0610FB;margin-top:15%;">View Avatar</button>
+            <button type="button" id="seeavatar" class="btn btn-demo" data-toggle="modal" data-target="#viewAvatar">View Avatar</button>
+            <!-- Check Password Box -->
+            <div class="modal fade" id="checkPassword" tabindex="-1" role="dialog" aria-labelledby="enter password">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="resetgamemodaltitle">Reset Game</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body" id="passwordboxbody">
+                            Enter Password: <input type="password" id="entered_password">
+                        </div>
+                        <div class="modal-footer" id="thefooter">
+                            <button class="btn btn-primary" id="tryreset">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Avatar -->
             <div class="modal left fade" id="viewAvatar" tabindex="-1" role="dialog" aria-labelledby="avatar">
                 <div class="modal-dialog" role="document">
@@ -161,8 +226,12 @@
 		        <p class="session">Welcome, {{ user.get_username }}! Score: {{ score }}</p>
             </section>
             <section class="col-md-3">
-                <p class="session" id="link1"><a href="{% url 'pickfruit' %}" style="color: #0610FB;">Fruit Swap</a></p>
-                <p class="session" id="link2"><a href="{% url 'logout' %}" style="color: #0610FB;">Logout</a></p>
+                <div style="margin-top:10%;">
+                    <p class="session" id="link1"><a href="{% url 'pickfruit' %}">Fruit Swap</a></p>
+                    <p class="session" id="link2"><a href="{% url 'logout' %}">Logout</a></p>
+                    <button type="button" class="session btn btn-demo" data-toggle="modal" data-target="#checkPassword">Reset Game</button>
+                    <p class="session" id="link3"><a href="{% url 'pickchallenge' %}">Challenges</a></p>
+                </div>
             </section>
         </section>
     </section>
@@ -213,6 +282,28 @@
 <script type="text/javascript" src="/static/popper.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <script>
+$('#tryreset').on('click',  function() {
+        fetch('/resetgame/', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                enteredpassword: $('#entered_password').val()
+            })
+        }).then(res=>res.json()).then(res=>{
+            if(res.success) { 
+                $('#resetgamemodaltitle').text("Resetting...");
+                window.location.reload();
+            } else {
+                $('#entered_password').val('')
+                $('#entered_password').css("border", "3px solid red");
+                $("#passwordboxbody").append("<br/><strong>Wrong Password</strong>")
+            }  
+        }).catch(e=>{
+            console.error(e)
+        });
+    });
 	function addPrize(e){
 		console.log(e,this);
 		const target = e.target;

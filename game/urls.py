@@ -12,5 +12,6 @@ urlpatterns = [
     path('setfruit/', logic.setFruit, name='setFruit'),
     path('chooseprize/', logic.choosePrize, name='choosePrize'),
     path('resetgame/', logic.resetgame, name='resetgame'),
-    path('bonus_challenges/', views.bonus_challenge, name='bonus_challenge')
+    path('bonus_challenges/', views.bonus_challenge, name='bonus_challenge'),
+    path('bonus_question/', views.bQuest, name='bonus_question')
 ]

@@ -19,6 +19,9 @@ def start(request):
 
 def aboutteam(request):
     return render(request, "game/about.html")
+def bQuest(request):
+    return render(request, "game/bonus_question.html")    
+    
 
 def fruit(request):
     context = {}
@@ -51,6 +54,9 @@ def challenge(request):
     
     
     
+
+
+
 def bonus_challenge(request):
     context = {}
     try:

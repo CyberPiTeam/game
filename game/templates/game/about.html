@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Team</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+        @media screen and (max-width:650px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .image {
+            position:relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: 0.5s ease;
+            background-color: black;
+        }
+        .image:hover .overlay {
+            opacity: 0.85;
+        }
+        .description {
+            color: white;
+            font-size: smaller;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .container {
+            padding: 0 16px;
+        }
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .title {
+            color: grey;
+        }
+        .name {
+            text-align: center;
+        }
+        .continue {
+            text-align:center;
+        }
+        a {
+            color: #1C9CD3; 
+        }
+        a:hover {
+            color: #F26D26; 
+        }
+    </style>
+</head>
+<body>
+<h2 style="text-align:center;margin-top:2%;">Meet Our Team and Sponsors</h2>
+<p class="continue"><a href="{% url 'pickfruit' %}">Continue Game</a></p>
+<div class="row" style="margin:1%;">
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/sabrina_kundu.jpg" alt="Sabrina Kundu" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        <i>Most challenging...</i>
+                        <br>
+                        <br>
+                        <strong>Educational experience</strong>
+                        <br>
+                        Learning how to write in Arabic.
+                        <br>
+                        <br>
+                        <strong>Career experience</strong>
+                        <br>
+                        Building a Jira-like app from scratch @ Dominion Energy.
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">Sabrina Kundu</h2>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/placeholder-man-300x300.png" alt="Brandon Mohan" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        <i>Most challenging...</i>
+                        <br>
+                        <br>
+                        <strong>Educational experience</strong>
+                        <br>
+                        
+                        <br>
+                        <br>
+                        <strong>Career experience</strong>
+                        <br>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">Brandon Mohan</h2>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/placeholder-man-300x300.png" alt="Paul Guller" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        <i>Most challenging...</i>
+                        <br>
+                        <br>
+                        <strong>Educational experience</strong>
+                        <br>
+                        
+                        <br>
+                        <br>
+                        <strong>Career experience</strong>
+                        <br>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">Paul Guller</h2>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/placeholder-man-300x300.png" alt="Nick Copi" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        <i>Most challenging...</i>
+                        <br>
+                        <br>
+                        <strong>Educational experience</strong>
+                        <br>
+                        
+                        <br>
+                        <br>
+                        <strong>Career experience</strong>
+                        <br>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">Nick Copi</h2>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/CodeVA Logo.png" alt="CodeVA" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        CodeVA is a non-profit that partners with schools, parents, and communities to bring equitable computer science education to all of Virginia's students.
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">CodeVA</h2>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="image">
+                <img src="/static/team/vcu.png" alt="VCU" style="width:100%;height:100%;">
+                <div class="overlay">
+                    <div class="description">
+                        The Virginia Commonwealth University College of Engineering strives to provide students with a well-rounded educational experience.
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="name">VCU</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/static/jquery-3.5.1.min.js"></script>
+<script src="/static/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</html>
