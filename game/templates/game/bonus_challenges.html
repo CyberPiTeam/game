@@ -272,7 +272,7 @@
 		            <button class="btn btn-primary btn-block level chalbtn" solved="{{ chal.solved }}" id = "{{ chal.id }}" name = "{{ chal.name }}" descstart = "{{ chal.desc_start }}" url = "{{ chal.url }}" descend = "{{ chal.desc_end }}" data-toggle="modal" data-target="#myModal">{{ chal.points}}</button>
                 {% endif %}
             </section>
-	{% endfor %}`
+	{% endfor %}
     </section>
     {% else %}
         <p id="warning">You must be logged in to continue playing the game. Sign in <a href="../login">here.</a></p>
@@ -325,7 +325,7 @@ $('#tryreset').on('click',  function() {
 			console.log(res);
 			window.location.reload();
 		}).catch(e=>{
-			console.error(e)
+			console.error(e);
 		});
 	}
 (function($) {
@@ -369,11 +369,14 @@ $('#tryreset').on('click',  function() {
 				    $('#finish0').on('click', function() { 
                         window.location.reload();
 				    })
+                    $('#close0').on('click', function() { 
+                        window.location.reload();
+				    })
                     chalbtn.disabled = true;
 				} else {
-					$('#input0').css("border", "1px solid red");
-					$('#footer0').html('<button class="btn btn-primary" data-dismiss="modal" id="done0">Try Again</button>')
-				}
+					$('#input0').css("border", "3px solid red");
+                    $('#input0').val('');
+                    $("#body0").append("<br/><strong>Wrong Answer</strong>")				}
 			}).catch(e=>{
 				console.error(e)
 			});
